@@ -77,10 +77,10 @@ function set_github_release {
             BODY="'"{\"tag_name\":\"v${VERSION}\",\"target_commitish\":\"${MASTER}\",\"name\":\"v${VERSION}\",\"body\":\"${KEYWORD}\",\"draft\":false,\"prerelease\":false}"'"
 
             log_message "POST data for GitHub Release API"
-            echo ${BODY} | jq
+            echo ${BODY}
 
             # GitHub Release API
-            curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${API_TOKEN}" https://api.github.com/repos/${GITHUB_REPOSITORY}/releases -d $BODY | jq .
+            curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${API_TOKEN}" https://api.github.com/repos/${GITHUB_REPOSITORY}/releases -d ${BODY} | jq .
             exit 0
         fi
 
