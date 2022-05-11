@@ -61,7 +61,7 @@ function set_github_release {
     # This Function will check the exact supported KEYWORD to process the GitHub Release
     # based on the branch name and current date for version
     COMMIT_MSG=$(jq '.commits[].message, .head_commit.message' < ${EVENT_PATH} | grep 'RELEASE-')
-    log_message ${COMMIT_MSG}
+    echo ${COMMIT_MSG}
 
     TRUE=$(echo ${COMMIT_MSG} | grep -w "${KEYWORD}")
     if [ "${TRUE}" ]; then
