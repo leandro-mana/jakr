@@ -80,8 +80,8 @@ function set_github_release {
             echo ${BODY} | jq
 
             # GitHub Release API
-            REQUEST=$(curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${API_TOKEN}" https://api.github.com/repos/${GITHUB_REPOSITORY}/releases -d \'${BODY}\' && exit 1)
-            echo ${REQUEST} | jq .
+            curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${API_TOKEN}" https://api.github.com/repos/${GITHUB_REPOSITORY}/releases -d \'${BODY}\' | jq .
+            exit 0
         fi
 
     else
