@@ -9,9 +9,8 @@
 set -e
 
 # Git Message containing the keyword
-KEYWORD=$*
+KEYWORD='RELEASE-'
 RELEASER='JARK'
-RELEASE_TAG='1.0.0' # MAKE THIS FOR INPUT
 
 # Functions definition
 function log_message {
@@ -61,7 +60,8 @@ function get_environment {
 function set_github_release {
     # This Function will check the exact supported KEYWORD to process the GitHub Release
     # based on the branch name and current date for version
-    TRUE=$(jq '.commits[].message, .head_commit.message' < ${EVENT_PATH} | grep -w "${KEYWORD}")
+    COMMIT_MSG=$(jq '.commits[].message, .head_commit.message' < ${EVENT_PATH})
+    TRUE=$(echo ${COMMIT_MSG} | grep -w "${KEYWORD}")
     if [ "${TRUE}" ]; then
         if [ "${LOCAL_TEST}" ]; then
             log_message "[TESTING] - KEYWORD:${KEYWORD} - was found, no GitHub Release created."
@@ -72,10 +72,11 @@ function set_github_release {
             # NOTE: git global setting needed to run in GitHub Workflow Environment
             git config --global --add safe.directory /github/workspace
             MASTER=$(git rev-parse --abbrev-ref HEAD)
-            VERSION=$(date +%F.%s)
+            RELEASE_VERSION=$(echo ${COMMIT_MSG} | awk -F 'RELEASE-' '{print $NF}' | awk -F ' ' '{print $1}')
+            DATE=$(date +%F.%s)
 
             # Set DATA Body for GitHub Release API            
-            BODY='{"tag_name":"'"v${RELEASE_TAG}"'","target_commitish":"'"${MASTER}"'","name":"'"v${RELEASE_TAG}"'","body":"'"v${VERSION}"'","draft":false,"prerelease":false}'
+            BODY='{"tag_name":"'"v${RELEASE_VERSION}"'","target_commitish":"'"${MASTER}"'","name":"'"v${RELEASE_VERSION}"'","body":"'"${DATE}"'","draft":false,"prerelease":false}'
 
             log_message "POST data for GitHub Release API"
             echo ${BODY}
