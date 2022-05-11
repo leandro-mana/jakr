@@ -60,10 +60,11 @@ function get_environment {
 function set_github_release {
     # This Function will check the exact supported KEYWORD to process the GitHub Release
     # based on the branch name and current date for version
-    COMMIT_MSG=$(jq '.commits[].message, .head_commit.message' < ${EVENT_PATH} | grep 'RELEASE-')
-    echo ${COMMIT_MSG}
+    COMMIT_MSG=$(jq '.commits[].message' < ${EVENT_PATH} | grep 'RELEASE-' | head -1 )
+    log_message ${COMMIT_MSG}
 
     TRUE=$(echo ${COMMIT_MSG} | grep -w "${KEYWORD}")
+    log_message ${TRUE}
     if [ "${TRUE}" ]; then
         if [ "${LOCAL_TEST}" ]; then
             log_message "[TESTING] - KEYWORD:${KEYWORD} - was found, no GitHub Release created."
