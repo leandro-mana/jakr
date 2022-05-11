@@ -16,7 +16,7 @@ RELEASER='JARK'
 function log_message {
     # This Function act as logger for better finding of messages in the output
     # IMPUT as String Message (i.e. log_message "this message")
-    MESSAGE=${1}
+    MESSAGE=${*}
     NUM_OF_CHARS=$(echo ${MESSAGE} | wc -c)
     NUM_OF_CHARS=$((${NUM_OF_CHARS} + 3))
     LINE_OF_CHARS=$(printf %${NUM_OF_CHARS}s | tr " " '#')
@@ -60,12 +60,8 @@ function get_environment {
 function set_github_release {
     # This Function will check the exact supported KEYWORD to process the GitHub Release
     # based on the branch name and current date for version
-    COMMIT_MSG=$(jq '.commits[].message' < ${EVENT_PATH} | grep 'RELEASE-' | head -1 )
-    log_message ${COMMIT_MSG}
-
-    TRUE=$(echo ${COMMIT_MSG} | grep -w "${KEYWORD}")
-    log_message ${TRUE}
-    if [ "${TRUE}" ]; then
+    COMMIT_MSG=$(jq '.commits[].message' < ${EVENT_PATH} | grep 'RELEASE-' | head -1)
+    if [ "${COMMIT_MSG}" ]; then
         if [ "${LOCAL_TEST}" ]; then
             log_message "[TESTING] - KEYWORD:${KEYWORD} - was found, no GitHub Release created."
             exit 0
