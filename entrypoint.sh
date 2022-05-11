@@ -71,7 +71,7 @@ function set_github_release {
             # NOTE: git global setting needed to run in GitHub Workflow Environment
             git config --global --add safe.directory /github/workspace
             MASTER=$(git rev-parse --abbrev-ref HEAD)
-            RELEASE_VERSION=$(echo ${COMMIT_MSG} | awk -F 'RELEASE-' '{print $NF}' | awk -F ' ' '{print $1}')
+            RELEASE_VERSION=$(echo ${COMMIT_MSG} | tr -d '"' | awk -F 'RELEASE-' '{print $NF}' | awk -F ' ' '{print $1}')
             DATE=$(date +%F.%s)
 
             # Set DATA Body for GitHub Release API            
