@@ -75,7 +75,7 @@ function set_github_release {
             VERSION=$(date +%F.%s)
 
             # Set DATA Body for GitHub Release API            
-            BODY='{"tag_name":"'"v${RELEASE_TAG}"'","target_commitish":"'"${MASTER}"'","name":"'"v${RELEASE_TAG}"'","body":"'"v${VERSION}"'","draft":false,"prerelease":false}'
+            BODY='{"tag_name":"v1.0.0","target_commitish":"'"${MASTER}"'","name":"'"v${RELEASE_TAG}"'","body":"'"v${VERSION}"'","draft":false,"prerelease":false}'
 
             log_message "POST data for GitHub Release API"
             echo ${BODY}
