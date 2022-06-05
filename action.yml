@@ -1,0 +1,11 @@
+name: 'JAKR - Just Another Keyword Releaser'
+
+description: 'Create a Release based on commit message keyword'
+
+runs:
+   using: 'docker'
+   image: 'Dockerfile'
+
+branding:
+   icon: 'gift'
+   color: 'green'
