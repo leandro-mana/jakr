@@ -69,7 +69,6 @@ function set_github_release {
             exit 0
 
         else
-            if [  ]
             DATE=$(date +%F.%s)
             # Set DATA Body for GitHub Release API            
             BODY='{"tag_name":"'"v${RELEASE_VERSION}"'","name":"'"v${RELEASE_VERSION}"'","body":"'"${DATE}"'","draft":false,"prerelease":false}'
