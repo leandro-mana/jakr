@@ -69,11 +69,8 @@ function set_github_release {
             exit 0
 
         else
-            # Get Branch and Version
-            # NOTE: git global setting needed to run in GitHub Workflow Environment
-            git config --global --add safe.directory /github/workspace
+            if [  ]
             DATE=$(date +%F.%s)
-
             # Set DATA Body for GitHub Release API            
             BODY='{"tag_name":"'"v${RELEASE_VERSION}"'","name":"'"v${RELEASE_VERSION}"'","body":"'"${DATE}"'","draft":false,"prerelease":false}'
 
