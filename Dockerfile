@@ -7,6 +7,8 @@ LABEL "com.github.actions.description"="Create a Release based on commit message
 LABEL "com.github.actions.icon"="gift"
 LABEL "com.github.actions.color"="green"
 
+ARG KEYWORD_ARG
+ENV KEYWORD=${KEYWORD_ARG}
 RUN apk add --no-cache \
         bash \
         curl \

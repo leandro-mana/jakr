@@ -6,7 +6,7 @@ SHELL=/bin/bash
 .SHELLFLAGS = -ceo pipefail
 
 # Default Keyword for test and run targets
-KEYWORD=FIXED
+KEYWORD=RELEASE-
 
 # Image Tag
 IMAGE_TAG=jakr-github-action
@@ -27,12 +27,12 @@ help:
 
 build:
 	$(INFO) "Build Target"
-	docker build --tag $(IMAGE_TAG) .
+	docker build --no-cache --tag $(IMAGE_TAG) --build-arg KEYWORD_ARG=$(KEYWORD) .
 	$(INFO) "Docker Image Successfully Built, Tag:$(IMAGE_TAG)"
 
 run: build
 	$(INFO) "Build Target"
-	docker run --rm $(IMAGE_TAG) $(KEYWORD)
+	docker run --rm $(IMAGE_TAG)
 
 test:
 	$(INFO) "Test Target"
